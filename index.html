@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Suburb Lookup</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="search-section">
+            <input type="file" id="fileInput" accept=".xlsx">
+            <button onclick="loadExcelData()">Load Data</button>
+            <input type="text" id="suburbInput" placeholder="Enter Suburb Name" oninput="debouncedSearchSuburb()">
+        </div>
+        <div class="results-section">
+            <table id="resultTable">
+                <!-- Results will be inserted here -->
+            </table>
+            <div class="pagination">
+                <button onclick="changePage(-1)">Previous</button>
+                <span id="pageInfo"></span>
+                <button onclick="changePage(1)">Next</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- SheetJS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+
+    <!-- Your JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
