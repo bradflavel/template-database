@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #143200; /* Dark Green background for the body */
     color: #333;
 }
 
@@ -17,7 +17,7 @@ body {
 .results-section {
     margin: 10px;
     padding: 20px;
-    background-color: white;
+    background-color: #f4f4f4; /* Lighter background for contrast */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -28,11 +28,8 @@ body {
 
 .results-section {
     flex-basis: 60%;
-    max-height: 800px; /* Set a fixed height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    /* ... other styles ... */
+    overflow: hidden;
 }
-
 
 input[type="text"], input[type="file"] {
     width: 100%;
@@ -40,40 +37,90 @@ input[type="text"], input[type="file"] {
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box; /* Ensures padding doesn't increase the size */
+    box-sizing: border-box;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background-color: #0056b3;
-    color: white;
+    background-color: #CBFF55; /* Lime Green */
+    color: #143200; /* Dark Green */
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #003d82;
+    background-color: #143200; /* Dark Green */
+    color: white;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+    table-layout: fixed; /* Add fixed table layout */
 }
 
-th, td {
-    border: 1px solid #ddd;
+/* Specific width for State and Post Code columns */
+.results-section th:nth-child(2),
+.results-section td:nth-child(2),
+.results-section th:nth-child(3),
+.results-section td:nth-child(3) {
+    width: 4%; /* Adjust the percentage as needed */
+}
+
+/* Allow more space for the Suburb column */
+.results-section th:nth-child(1),
+.results-section td:nth-child(1) {
+    width: 25%; /* Adjust the percentage as needed */
+}
+
+.results-section thead th {
+    position: sticky;
+    top: 0;
+    background-color: #CBFF55; /* Lime Green */
+    color: #143200; /* Dark Green */
+    font-weight: bold;
+    z-index: 10; /* Ensure the header is above other content */
+    border-bottom: 1px solid #ddd;
+}
+
+.results-section tbody {
+    overflow-y: auto; /* Allows scrolling within the tbody */
+}
+
+.results-section th, .results-section td {
     padding: 8px;
-}
-
-th {
-    background-color: #0056b3;
-    color: white;
+    border: 1px solid #ddd;
+    background-color: #fff; /* Ensure a white background for cells */
+    text-align: left;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #CBFF55; /* Lime Green */
+}
+
+.results-section td {
+    font-size: 0.9em; /* Adjust the font size as needed */
+}
+
+/* Optional: Add styles for pagination controls */
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.pagination button {
+    width: 10%;
+    min-width: 40px;
+}
+
+#pageInfo {
+    font-weight: bold;
 }

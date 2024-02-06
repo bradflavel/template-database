@@ -9,11 +9,24 @@
         <div class="search-section">
             <input type="file" id="fileInput" accept=".xlsx">
             <button onclick="loadExcelData()">Load Data</button>
-            <input type="text" id="suburbInput" placeholder="Enter Suburb Name" oninput="debouncedSearchSuburb()">
+            <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
         </div>
         <div class="results-section">
             <table id="resultTable">
-                <!-- Results will be inserted here -->
+                <thead>
+                    <tr>
+                        <th>Suburb</th>
+                        <th>State</th>
+                        <th>Post Code</th>
+                        <th>Road Enquiry</th>
+                        <th>Road Activity</th>
+                        <th>Priority Enquiry</th>
+                        <th>Priority Activity</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTableBody">
+                    <!-- Body rows will be inserted here -->
+                </tbody>
             </table>
             <div class="pagination">
                 <button onclick="changePage(-1)">Previous</button>
@@ -22,6 +35,7 @@
             </div>
             
         </div>
+        
     </div>
 
     <!-- SheetJS Library -->
