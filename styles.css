@@ -8,7 +8,7 @@ body {
 
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     padding: 20px;
 }
@@ -23,12 +23,24 @@ body {
 }
 
 .search-section {
-    flex-basis: 30%;
+    flex-basis: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .results-section {
-    flex-basis: 60%;
+    flex-basis: 40%;
     overflow: hidden;
+}
+
+#notePad {
+    flex-basis: 20%;
+    margin: 10px;
+}
+
+#versionSelector {
+    margin: 10px;
 }
 
 input[type="text"], input[type="file"] {
@@ -52,6 +64,11 @@ button {
     font-weight: bold;
 }
 
+#load-data {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
 button:hover {
     background-color: #143200; /* Dark Green */
     color: white;
@@ -69,13 +86,13 @@ table {
 .results-section td:nth-child(2),
 .results-section th:nth-child(3),
 .results-section td:nth-child(3) {
-    width: 4%; /* Adjust the percentage as needed */
+    width: 5%; /* Adjust the percentage as needed */
 }
 
 /* Allow more space for the Suburb column */
 .results-section th:nth-child(1),
 .results-section td:nth-child(1) {
-    width: 25%; /* Adjust the percentage as needed */
+    width: 20%; /* Adjust the percentage as needed */
 }
 
 .results-section thead th {
@@ -86,6 +103,7 @@ table {
     font-weight: bold;
     z-index: 10; /* Ensure the header is above other content */
     border-bottom: 1px solid #ddd;
+    font-size: 0.9em;
 }
 
 .results-section tbody {
@@ -104,7 +122,7 @@ tr:nth-child(even) {
 }
 
 .results-section td {
-    font-size: 0.9em; /* Adjust the font size as needed */
+    font-size: 0.75em; /* Adjust the font size as needed */
 }
 
 /* Optional: Add styles for pagination controls */
@@ -123,4 +141,34 @@ tr:nth-child(even) {
 
 #pageInfo {
     font-weight: bold;
+}
+
+textarea {
+    font-family: 'Roboto', sans-serif; /* This applies the Roboto font */
+    padding: 10px; /* Adds padding inside the textarea */
+    border: 1px solid #ccc; /* Adds a light gray border */
+    border-radius: 4px; /* Optional: Rounds the corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+    margin: 10px 0; /* Adds some space around the textarea */
+    width: calc(100% - 22px); /* Adjusts width to account for padding */
+    height: 150px; /* Sets an initial height */
+    resize: vertical; /* Allows vertical resizing only */
+}
+
+
+.text-selector {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.selector-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.selector-buttons button {
+    width: 40%;
 }

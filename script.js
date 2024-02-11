@@ -1,7 +1,7 @@
 var data = []; // Array to store processed data
 var currentFilteredData = []; // Array to store filtered data
 var currentPage = 1;
-var rowsPerPage = 10; // Adjust the number of rows per page as needed
+var rowsPerPage = 5; // Adjust the number of rows per page as needed
 
 function loadExcelData() {
     var file = document.getElementById('fileInput').files[0];
@@ -113,3 +113,170 @@ function searchSuburb() {
 }
 
 var debouncedSearchSuburb = debounce(searchSuburb, 250); // 250 milliseconds wait
+
+
+
+// Notepad section ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+function populateVersionSelector() {
+    var versionSelector = document.getElementById('versionSelector');
+    versionSelector.innerHTML = ''; // Clear existing options
+
+    // Collect all timestamps and sort them
+    var timestamps = [];
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key.startsWith('textData_')) {
+            var timestamp = parseInt(key.split('_')[1]);
+            timestamps.push(timestamp);
+        }
+    }
+    timestamps.sort(function(a, b) { return b - a; }); // Sort in descending order
+
+    // Add sorted timestamps to the dropdown
+    timestamps.forEach(function(timestamp) {
+        var option = document.createElement('option');
+        option.value = 'textData_' + timestamp;
+        var date = new Date(timestamp);
+        var formattedDate = date.toLocaleDateString('en-AU'); // Australian date format
+        var time = date.toLocaleTimeString('en-AU'); // Australian time format
+        option.textContent = 'Saved at ' + formattedDate + ' ' + time;
+        versionSelector.appendChild(option);
+    });
+}
+
+// Function to load the selected version
+function loadSelectedVersion() {
+    var versionSelector = document.getElementById('versionSelector');
+    var selectedKey = versionSelector.value;
+    var notePad = document.getElementById('notePad');
+
+    if (selectedKey && localStorage.getItem(selectedKey)) {
+        notePad.value = localStorage.getItem(selectedKey);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    populateVersionSelector();
+
+    var notePad = document.getElementById('notePad');
+    var saveInterval = 10 * 1000; // 10 seconds
+    var deleteAfter = 15 * 60 * 1000; // 15 minutes
+
+    // Function to save the current version
+    function saveCurrentVersion() {
+        var currentText = notePad.value;
+        var mostRecentKey = null;
+        var mostRecentTime = 0;
+    
+        // Find the most recent saved version
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            if (key.startsWith('textData_')) {
+                var timestamp = parseInt(key.split('_')[1]);
+                if (timestamp > mostRecentTime) {
+                    mostRecentTime = timestamp;
+                    mostRecentKey = key;
+                }
+            }
+        }
+    
+        // Compare current text with the most recent saved version
+        if (mostRecentKey) {
+            var mostRecentText = localStorage.getItem(mostRecentKey);
+            if (currentText === mostRecentText) {
+                // If the text is the same, do not save a new version
+                return;
+            }
+        }
+    
+        // Save the new version
+        var timestamp = new Date().getTime();
+        localStorage.setItem('textData_' + timestamp, currentText);
+        deleteOldVersions();
+        populateVersionSelector(); // Update the selector with the new version
+    }
+
+    function populateVersionSelector() {
+    var versionSelector = document.getElementById('versionSelector');
+    versionSelector.innerHTML = ''; // Clear existing options
+
+    // Collect all timestamps and sort them
+    var timestamps = [];
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key.startsWith('textData_')) {
+            var timestamp = parseInt(key.split('_')[1]);
+            timestamps.push(timestamp);
+        }
+    }
+    timestamps.sort(function(a, b) { return b - a; }); // Sort in descending order
+
+    // Add sorted timestamps to the dropdown
+    timestamps.forEach(function(timestamp) {
+        var option = document.createElement('option');
+        option.value = 'textData_' + timestamp;
+        var date = new Date(timestamp);
+        var formattedDate = date.toLocaleDateString('en-AU'); // Australian date format
+        var time = date.toLocaleTimeString('en-AU'); // Australian time format
+        option.textContent = 'Saved at ' + formattedDate + ' ' + time;
+        versionSelector.appendChild(option);
+    });
+}
+
+    // Function to delete versions older than 30 minutes
+    function deleteOldVersions() {
+        var currentTime = new Date().getTime();
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            if (key.startsWith('textData_')) {
+                var timestamp = parseInt(key.split('_')[1]);
+                if (currentTime - timestamp > deleteAfter) {
+                    localStorage.removeItem(key);
+                }
+            }
+        }
+    }
+
+    // Load the most recent version
+    var mostRecentKey;
+    var mostRecentTime = 0;
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key.startsWith('textData_')) {
+            var timestamp = parseInt(key.split('_')[1]);
+            if (timestamp > mostRecentTime) {
+                mostRecentTime = timestamp;
+                mostRecentKey = key;
+            }
+        }
+    }
+    if (mostRecentKey) {
+        notePad.value = localStorage.getItem(mostRecentKey);
+    }
+
+    // Save data every 10 seconds
+    setInterval(saveCurrentVersion, saveInterval);
+});
+
+function changeVersion(delta) {
+    var versionSelector = document.getElementById('versionSelector');
+    var currentIndex = versionSelector.selectedIndex;
+    var newIndex = currentIndex + delta;
+
+    // Check bounds
+    if (newIndex >= 0 && newIndex < versionSelector.options.length) {
+        versionSelector.selectedIndex = newIndex; // Change the selected index
+        loadSelectedVersion(); // Load the selected version
+    }
+}
+
+// Event listeners for the buttons
+document.getElementById('prevVersion').addEventListener('click', function() {
+    changeVersion(-1); // Previous version
+});
+
+document.getElementById('nextVersion').addEventListener('click', function() {
+    changeVersion(1); // Next version
+});
