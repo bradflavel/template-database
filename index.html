@@ -7,11 +7,14 @@
 </head>
 <body>
     <div class="container">
+        <!-- Search Section -->
         <div class="search-section">
             <input type="file" id="fileInput" accept=".xlsx">
             <button id="load-data" onclick="loadExcelData()">Load Data</button>
             <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
         </div>
+
+        <!-- Results Section -->
         <div class="results-section">
             <table id="resultTable">
                 <thead>
@@ -34,11 +37,11 @@
                 <span id="pageInfo"></span>
                 <button onclick="changePage(1)">Next</button>
             </div>
-            
-            
         </div>
-        <textarea id="notePad" rows="10" cols="50"></textarea>
+
+        <!-- Notes and Selector Section -->
         <div class="text-selector">
+            <textarea id="notePad" rows="10" cols="50"></textarea>
             <select id="versionSelector" onchange="loadSelectedVersion()">
                 <!-- Options will be dynamically added here -->
             </select>
@@ -47,7 +50,24 @@
                 <button id="nextVersion">Next</button>
             </div>
         </div>
-        
+
+        <!-- Departments and Scroll Button Section -->
+        <div class="departments-section">
+            <div id="infoContainer">
+                <div id="infoContent">
+                    <table id="department-data">
+                        <tr><td>Intermodal/Palletised Team</td><td>xxxxxxxx</td></tr>
+                        <tr><td>Courier Team</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>International Team</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>Credit/Accounts Team</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>Sales Team</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>IT Team</td><td>xxxxxxxxx</td></tr>
+                        <!-- Add more rows for additional departments -->
+                    </table>
+                </div>
+            </div>
+            <button id="scrollButton">Hover for Scrolling</button>
+        </div>
     </div>
 
     <!-- SheetJS Library -->

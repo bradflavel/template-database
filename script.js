@@ -1,7 +1,7 @@
 var data = []; // Array to store processed data
 var currentFilteredData = []; // Array to store filtered data
 var currentPage = 1;
-var rowsPerPage = 5; // Adjust the number of rows per page as needed
+var rowsPerPage = 4; // Adjust the number of rows per page as needed
 
 function loadExcelData() {
     var file = document.getElementById('fileInput').files[0];
@@ -161,8 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
     populateVersionSelector();
 
     var notePad = document.getElementById('notePad');
-    var saveInterval = 10 * 1000; // 10 seconds
-    var deleteAfter = 15 * 60 * 1000; // 15 minutes
+    var saveInterval = 30 * 1000; // 30 seconds
+    var deleteAfter = 60 * 60 * 1000; // 60 minutes
 
     // Function to save the current version
     function saveCurrentVersion() {
@@ -280,3 +280,30 @@ document.getElementById('prevVersion').addEventListener('click', function() {
 document.getElementById('nextVersion').addEventListener('click', function() {
     changeVersion(1); // Next version
 });
+
+/* Script for Departments */
+
+var content = document.getElementById('infoContent');
+var scrollButton = document.getElementById('scrollButton'); // Button for controlling scroll
+var speed = 0; // Initial speed is zero (no scrolling)
+var yPos = 0; // Current position
+
+// Function to handle the scrolling animation
+function scrollContent() {
+    yPos -= speed;
+    if (yPos < -content.offsetHeight / 2) {
+        yPos = 0;
+    }
+    content.style.transform = 'translateY(' + yPos + 'px)';
+    requestAnimationFrame(scrollContent);
+}
+
+// Duplicate the content to create a continuous loop
+document.addEventListener('DOMContentLoaded', function() {
+    content.innerHTML += content.innerHTML; // Duplicate the content
+    requestAnimationFrame(scrollContent); // Start the animation
+});
+
+// Adjust the speed when hovering over the button
+scrollButton.onmouseover = function() { speed = 1; }; // Set a positive speed
+scrollButton.onmouseout = function() { speed = 0; }; // Stop the scrolling
