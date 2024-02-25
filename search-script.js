@@ -1,7 +1,7 @@
 var data = []; 
 var currentFilteredData = []; 
 var currentPage = 1;
-var rowsPerPage = 4; 
+var rowsPerPage = 8; 
 
 function loadExcelData() {
     var file = document.getElementById('fileInput').files[0];

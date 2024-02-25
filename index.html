@@ -7,54 +7,51 @@
 </head>
 <body>
     <div class="container">
-        <!-- Search Section -->
-        <div class="search-section">
-            <input type="file" id="fileInput" accept=".xlsx">
-            <button id="load-data" onclick="loadExcelData()">Load Data</button>
-            <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
-        </div>
+        <div class="left-container">
+            <div class="text-selector">
+                <textarea id="notePad" rows="10" cols="50"></textarea>
+                <select id="versionSelector" onchange="loadSelectedVersion()">
+                    <!-- Dynamic options -->
+                </select>
+                <div class="selector-buttons">
+                    <button id="prevVersion">Previous</button>
+                    <button id="nextVersion">Next</button>
+                </div>
+            </div>
+            <div class="search-section">
+                <input type="file" id="fileInput" accept=".xlsx">
+                <button id="load-data" onclick="loadExcelData()">Load Data</button>
+                <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
+            </div>
 
-        <!-- Results Section -->
-        <div class="results-section">
-            <table id="resultTable">
-                <thead>
-                    <tr>
-                        <th>Suburb</th>
-                        <th>State</th>
-                        <th>Post Code</th>
-                        <th>Road Enquiry</th>
-                        <th>Road Activity</th>
-                        <th>Priority Enquiry</th>
-                        <th>Priority Activity</th>
-                    </tr>
-                </thead>
-                <tbody id="resultTableBody">
-                    <!-- Body rows will be inserted here -->
-                </tbody>
-            </table>
-            <div class="pagination">
-                <button onclick="changePage(-1)">Previous</button>
-                <span id="pageInfo"></span>
-                <button onclick="changePage(1)">Next</button>
+            <div class="results-section">
+                <table id="resultTable">
+                    <thead>
+                        <tr>
+                            <th>Suburb</th>
+                            <th>State</th>
+                            <th>Post Code</th>
+                            <th>Road Enquiry</th>
+                            <th>Road Activity</th>
+                            <th>Priority Enquiry</th>
+                            <th>Priority Activity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTableBody">
+                        <!-- Script Data -->
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <button onclick="changePage(-1)">Previous</button>
+                    <span id="pageInfo"></span>
+                    <button onclick="changePage(1)">Next</button>
+                </div>
             </div>
         </div>
-
-        <!-- Notes and Selector Section -->
-        <div class="text-selector">
-            <textarea id="notePad" rows="10" cols="50"></textarea>
-            <select id="versionSelector" onchange="loadSelectedVersion()">
-                <!-- Options will be dynamically added here -->
-            </select>
-            <div class="selector-buttons">
-                <button id="prevVersion">Previous</button>
-                <button id="nextVersion">Next</button>
-            </div>
-        </div>
-
-        <!-- Departments and Scroll Button Section -->
-        <div class="departments-section">
-            <div id="infoContainer">
-                <div id="infoContent">
+        <div class="right-container">
+            <div class="departments-section">
+                <h1 id="department-title">Department Numbers</h1>
+                <div id="infoContainer">
                     <table id="department-data">
                         <tr><td>Intermodal/Palletised Team</td><td>xxxxxxxx</td></tr>
                         <tr><td>Courier Team</td><td>xxxxxxxxx</td></tr>
@@ -62,18 +59,14 @@
                         <tr><td>Credit/Accounts Team</td><td>xxxxxxxxx</td></tr>
                         <tr><td>Sales Team</td><td>xxxxxxxxx</td></tr>
                         <tr><td>IT Team</td><td>xxxxxxxxx</td></tr>
-                        <!-- Add more rows for additional departments -->
                     </table>
                 </div>
             </div>
-            <button id="scrollButton">Hover for Scrolling</button>
         </div>
     </div>
 
-    <!-- SheetJS Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
 
-    <!-- Your JavaScript File -->
     <script src="script.js"></script>
 </body>
 </html>

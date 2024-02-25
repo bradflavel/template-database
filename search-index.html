@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Suburb Lookup</title>
+    <link rel="stylesheet" href="search-styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1 id="page-title">TGE Suburb/Depot Search</h1>
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="file" id="fileInput" accept=".xlsx">
+            <button id="load-data" onclick="loadExcelData()">Load Data</button>
+            <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Suburb</th>
+                        <th>State</th>
+                        <th>Post Code</th>
+                        <th>Road Enquiry</th>
+                        <th>Road Activity</th>
+                        <th>Priority Enquiry</th>
+                        <th>Priority Activity</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTableBody">
+                    <!-- Rows will be inserted here by script.js -->
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button onclick="changePage(-1)">Previous</button>
+                <span id="pageInfo"></span>
+                <button onclick="changePage(1)">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+    <script src="search-script.js"></script>
+</body>
+</html>
