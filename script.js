@@ -92,6 +92,7 @@ function debounce(func, wait) {
 
 function updateResultsTable(filter) {
     currentFilteredData = data.filter(row => 
+        row[0].toLowerCase().includes(filter) || row[2].toLowerCase().includes(filter)
         (row[0] && row[0].toLowerCase().includes(filter)) ||
         (row[2] && row[2].toLowerCase().includes(filter))
     );
