@@ -91,14 +91,14 @@ function debounce(func, wait) {
 }
 
 function updateResultsTable(filter) {
-    currentFilteredData = data.filter(row => 
-        row[0].toLowerCase().includes(filter) || row[2].toLowerCase().includes(filter)
-        (row[0] && row[0].toLowerCase().includes(filter)) ||
-        (row[2] && row[2].toLowerCase().includes(filter))
+    currentFilteredData = data.filter(row =>
+        (row[0] && typeof row[0] === 'string' && row[0].toLowerCase().includes(filter)) ||
+        (row[2] && typeof row[2] === 'string' && row[2].toLowerCase().includes(filter))
     );
     currentPage = 1;
     displayFilteredRows(currentFilteredData, currentPage);
 }
+
 
 
 function searchSuburb() {
