@@ -18,33 +18,42 @@
                     <button id="nextVersion">Next</button>
                 </div>
             </div>
-            <div class="search-section">
-                <input type="file" id="fileInput" accept=".xlsx">
-                <button id="load-data" onclick="loadExcelData()">Load Data</button>
-                <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
-            </div>
 
-            <div class="results-section">
-                <table id="resultTable">
-                    <thead>
-                        <tr>
-                            <th>Suburb</th>
-                            <th>State</th>
-                            <th>Post Code</th>
-                            <th>Road Enquiry</th>
-                            <th>Road Activity</th>
-                            <th>Priority Enquiry</th>
-                            <th>Priority Activity</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultTableBody">
-                        <!-- Script Data -->
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <button onclick="changePage(-1)">Previous</button>
-                    <span id="pageInfo"></span>
-                    <button onclick="changePage(1)">Next</button>
+            <div class="search-results-container">
+                <div class="search-section">
+                    <div class="file-input-container">
+                        <label for="fileInput" class="custom-file-upload">
+                            Choose File
+                        </label>
+                        <input type="file" id="fileInput" accept=".xlsx">
+                        <span id="fileName">No file chosen</span>
+                    </div>
+                    <button id="load-data" onclick="loadExcelData()">Load Data</button>
+                    <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
+                </div>
+
+                <div class="results-section">
+                    <table id="resultTable">
+                        <thead>
+                            <tr>
+                                <th>Suburb</th>
+                                <th>State</th>
+                                <th>Post Code</th>
+                                <th>Road Enquiry</th>
+                                <th>Road Activity</th>
+                                <th>Priority Enquiry</th>
+                                <th>Priority Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultTableBody">
+                            <!-- Script Data -->
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <button onclick="changePage(-1)">Previous</button>
+                        <span id="pageInfo"></span>
+                        <button onclick="changePage(1)">Next</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,5 +77,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
 
     <script src="script.js"></script>
+    <script>
+        // Display file name when a file is selected
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('fileName').textContent = fileName;
+        });
+    </script>
 </body>
 </html>
