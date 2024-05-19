@@ -71,11 +71,16 @@
                     </table>
                 </div>
             </div>
+            <div class="transcript-generator">
+                <textarea id="transcript-input" placeholder="Paste your transcript here..."></textarea>
+                <button id="generate-pdf">Generate PDF</button>
+            </div>              
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="script.js"></script>
     <script>
         // Display file name when a file is selected
