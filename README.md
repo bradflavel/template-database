@@ -1,17 +1,31 @@
-# Suburb Search Tool
+# Spreadsheet Viewer & Search Tool
 
-A client-side web app that allows users to:
+A fast, themeable, client-side web tool for viewing, searching, and working with spreadsheet data — all in your browser.
 
-- Load suburb data from Excel `.xlsx` files
-- Search by suburb name or postcode
-- View paginated results
-- Maintain a personal notepad with autosave and version history
+## Features
 
-### Tech Stack
-- HTML/CSS/JavaScript
-- [SheetJS (xlsx)](https://sheetjs.com/) for Excel parsing
-- No backend – all processing is done in the browser
+- Load `.xlsx` spreadsheets (via drag-and-drop or file input)
+- Dynamically render column headers and rows
+- Global search across all cells
+- Sort columns by clicking headers (ascending/descending)
+- Keyboard shortcuts:
+  - `Enter`: Load spreadsheet
+  - `←` / `→`: Paginate results
+  - `/`: Focus search bar
+- Paginated results with smooth table layout
+- Theme toggle (light/dark) with persistent user preference
+- Personal notepad with:
+  - Autosave and version history
+  - Export to `.txt`
+  - Import/restore from `.txt`
+- Mobile-responsive UI with hover interaction for better accessibility
 
-### Demo
-Coming Soon
+## Tech Stack
 
+- HTML, CSS (custom theme variables), JavaScript (ES6 Modules)
+- [SheetJS](https://sheetjs.com/) to parse Excel files
+- No backend — works entirely offline and in the browser
+
+## Demo
+
+Coming soon

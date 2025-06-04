@@ -1,3 +1,5 @@
+import { getRawData } from './excel.js';
+
 let currentPage = 1;
 let rowsPerPage = 4;
 let currentData = [];
@@ -19,7 +21,7 @@ export function displayPage(data, page) {
     if (data.length === 0) {
         const row = document.createElement('tr');
         const cell = document.createElement('td');
-        cell.colSpan = 7;
+        cell.colSpan = 100; 
         cell.textContent = 'No data to display.';
         cell.style.textAlign = 'center';
         row.appendChild(cell);
@@ -42,14 +44,13 @@ export function displayPage(data, page) {
         : 'No results found.';
 }
 
-
 export function filterAndDisplayRows(filteredData, page) {
     currentData = filteredData;
     displayPage(currentData, page);
 }
 
 export function changePage(delta) {
-    const dataSet = currentData.length > 0 ? currentData : getDataFromExcel();
+    const dataSet = currentData.length > 0 ? currentData : getRawData();
     const totalPages = Math.ceil(dataSet.length / rowsPerPage);
     const nextPage = currentPage + delta;
 
@@ -59,37 +60,44 @@ export function changePage(delta) {
     }
 }
 
-export function setupSortableTable() {
-    const headers = document.querySelectorAll('#resultTable thead th');
-    headers.forEach((th, index) => {
+export function renderHeaders(headers) {
+    const headRow = document.getElementById('resultTableHeadRow');
+    headRow.innerHTML = '';
+
+    headers.forEach((header, index) => {
+        const th = document.createElement('th');
+        th.textContent = header;
         th.style.cursor = 'pointer';
-        th.addEventListener('click', () => {
-            const dataset = currentData.length > 0 ? currentData : getRawData();
-            if (!dataset || dataset.length === 0) return;
-
-            if (currentSortColumn === index) {
-                currentSortAsc = !currentSortAsc;
-            } else {
-                currentSortColumn = index;
-                currentSortAsc = true;
-            }
-
-            const sorted = [...dataset].sort((a, b) => {
-                const valA = a[index] || '';
-                const valB = b[index] || '';
-                return currentSortAsc
-                    ? valA.localeCompare(valB, undefined, { numeric: true })
-                    : valB.localeCompare(valA, undefined, { numeric: true });
-            });
-
-            resetPagination(sorted);
-            filterAndDisplayRows(sorted, 1);
-            updateSortIndicators(index, currentSortAsc);
-        });
+        th.addEventListener('click', () => handleSort(index));
+        headRow.appendChild(th);
     });
 }
 
-function updateSortIndicators(activeIndex, asc) {
+function handleSort(index) {
+    const dataset = currentData.length > 0 ? currentData : getRawData();
+    if (!dataset || dataset.length === 0) return;
+
+    if (currentSortColumn === index) {
+        currentSortAsc = !currentSortAsc;
+    } else {
+        currentSortColumn = index;
+        currentSortAsc = true;
+    }
+
+    const sorted = [...dataset].sort((a, b) => {
+        const valA = a[index] || '';
+        const valB = b[index] || '';
+        return currentSortAsc
+            ? valA.localeCompare(valB, undefined, { numeric: true })
+            : valB.localeCompare(valA, undefined, { numeric: true });
+    });
+
+    resetPagination(sorted);
+    filterAndDisplayRows(sorted, 1);
+    updateSortIndicators(index, currentSortAsc);
+}
+
+export function updateSortIndicators(activeIndex, asc) {
     const headers = document.querySelectorAll('#resultTable thead th');
     headers.forEach((th, idx) => {
         th.textContent = th.textContent.replace(/ ▲| ▼/, '');
@@ -97,9 +105,4 @@ function updateSortIndicators(activeIndex, asc) {
             th.textContent += asc ? ' ▲' : ' ▼';
         }
     });
-}
-
-import { getRawData } from './excel.js';
-function getDataFromExcel() {
-    return getRawData();
 }

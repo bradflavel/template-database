@@ -32,25 +32,16 @@
                         <span id="fileName">No file chosen</span>
                     </div>
                     <button id="load-data">Load Data</button>
-                    <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code">
+                    <input type="text" id="suburbInput" placeholder="Search any value">
                 </div>
 
                 <div class="results-section">
                     <table id="resultTable">
                         <thead>
-                            <tr>
-                                <th>Suburb</th>
-                                <th>State</th>
-                                <th>Post Code</th>
-                                <th>Road Enquiry</th>
-                                <th>Road Activity</th>
-                                <th>Priority Enquiry</th>
-                                <th>Priority Activity</th>
-                            </tr>
+                            <tr id="resultTableHeadRow"></tr>
                         </thead>
-                        <tbody id="resultTableBody">
-                        </tbody>
-                    </table>
+                        <tbody id="resultTableBody"></tbody>
+                        </table>
                     <div class="pagination">
                         <button id="prevPage">Previous</button>
                         <span id="pageInfo"></span>
