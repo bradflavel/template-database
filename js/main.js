@@ -57,6 +57,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const mode = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
         localStorage.setItem('theme', mode);
     });
+
+    document.getElementById('exportTxt').addEventListener('click', () => {
+        const content = document.getElementById('notePad').value;
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `notes-${new Date().toISOString().slice(0, 16)}.txt`;
+        link.click();
+
+        URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('importTxt').addEventListener('click', () => {
+        document.getElementById('importFileInput').click();
+    });
+
+    document.getElementById('importFileInput').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('notePad').value = e.target.result;
+        };
+        reader.readAsText(file);
+    });
+
 });
 
 function debounce(func, wait) {
