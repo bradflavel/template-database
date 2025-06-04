@@ -13,19 +13,33 @@ export function displayPage(data, page) {
     const end = Math.min(start + rowsPerPage, data.length);
 
     tbody.innerHTML = '';
-    for (let i = start; i < end; i++) {
-        const tr = document.createElement('tr');
-        data[i].forEach(cell => {
-            const td = document.createElement('td');
-            td.textContent = cell;
-            tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
+
+    if (data.length === 0) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 7;
+        cell.textContent = 'No data to display.';
+        cell.style.textAlign = 'center';
+        row.appendChild(cell);
+        tbody.appendChild(row);
+    } else {
+        for (let i = start; i < end; i++) {
+            const tr = document.createElement('tr');
+            data[i].forEach(cell => {
+                const td = document.createElement('td');
+                td.textContent = cell;
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        }
     }
 
     const pageInfo = document.getElementById('pageInfo');
-    pageInfo.textContent = `Page ${page} of ${Math.ceil(data.length / rowsPerPage)}`;
+    pageInfo.textContent = data.length > 0
+        ? `Page ${page} of ${Math.ceil(data.length / rowsPerPage)}`
+        : 'No results found.';
 }
+
 
 export function filterAndDisplayRows(filteredData, page) {
     currentData = filteredData;

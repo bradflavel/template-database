@@ -4,10 +4,15 @@ import { setupNotepad } from './notepad.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     setupNotepad();
+    document.getElementById('suburbInput').focus();
+
 
     document.getElementById('load-data').addEventListener('click', () => {
         const file = document.getElementById('fileInput').files[0];
-        if (file) loadExcelData(file);
+        if (file) {
+            loadExcelData(file);
+            document.getElementById('suburbInput').value = '';
+        }
     });
 
     document.getElementById('suburbInput').addEventListener('input', debounce(() => {
