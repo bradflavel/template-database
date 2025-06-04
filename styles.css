@@ -1,10 +1,10 @@
 /* General Styles */
 body {
-    font-family: 'Global Sans', sans-serif; /* Updated to Global Sans */
+    font-family: 'Global Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #143200; /* Fern */
-    color: #EEEAD9; /* Sand */
+    background-color: #2C3E50; 
+    color: #F4F4F4; 
 }
 
 .container {
@@ -19,14 +19,14 @@ body {
     flex-direction: column;
     flex: 1 1 75%;
     box-sizing: border-box;
-    margin-right: 20px; /* Space between left and right containers */
+    margin-right: 20px;
 }
 
 .right-container {
     display: flex;
     flex-direction: column;
-    flex: 1 1 20%; /* Ensuring it always takes up 20% of the space */
-    min-width: 200px; /* Minimum width to allow shrinking */
+    flex: 1 1 20%;
+    min-width: 200px;
     box-sizing: border-box;
 }
 
@@ -36,14 +36,14 @@ body {
 .results-section {
     padding: 20px;
     margin: 10px;
-    background-color: #EEEAD9; /* Sand */
+    background-color: #F4F4F4;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 5px solid #CBFF55; /* Wattle */
+    border: 5px solid #A3D9A5;
 }
 
 .text-selector {
-    color: #143200; /* Fern */
+    color: #2C3E50;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,12 +55,12 @@ body {
     flex-wrap: nowrap;
     justify-content: space-between;
     width: 100%;
-    margin: 10px 0; /* Margin between the text-selector and the search-results-container */
+    margin: 10px 0;
 }
 
 .search-section {
-    flex: 0 0 20%; /* 20% width */
-    min-width: 200px; /* Minimum width to allow shrinking */
+    flex: 0 0 20%;
+    min-width: 200px;
 }
 
 .file-input-container {
@@ -78,41 +78,41 @@ body {
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
-    background-color: #143200; /* Fern */
-    color: #EEEAD9; /* Sand */
-    border: 1px solid #CBFF55; /* Wattle */
+    background-color: #2C3E50;
+    color: #F4F4F4;
+    border: 1px solid #A3D9A5;
     border-radius: 4px;
 }
 
 .custom-file-upload:hover {
-    background-color: #CBFF55; /* Wattle */
-    color: #143200; /* Fern */
+    background-color: #B6E3B6;
+    color: #2C3E50;
 }
 
 #fileName {
-    color: #143200; /* Fern */
+    color: #2C3E50;
     padding: 10px;
     font-size: 0.8rem;
 }
 
 .results-section {
-    flex: 1 1 75%; /* 75% width */
-    color: #143200; /* Fern */
+    flex: 1 1 75%;
+    color: #2C3E50;
 }
 
 button, input[type="text"], input[type="file"], select {
     padding: 10px;
     margin: 5px 0;
-    border: 1px solid #CBFF55; /* Wattle */
+    border: 1px solid #A3D9A5;
     border-radius: 4px;
     box-sizing: border-box;
-    color: #143200; /* Fern */
-    background-color: #ffffff; /* White */
+    color: #2C3E50;
+    background-color: #ffffff;
 }
 
 button {
-    background-color: #143200; /* Fern */
-    color: #EEEAD9; /* Sand */
+    background-color: #2C3E50;
+    color: #F4F4F4;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -120,29 +120,29 @@ button {
 }
 
 button:hover {
-    background-color: #CBFF55; /* Wattle */
-    color: #143200; /* Fern */
+    background-color: #B6E3B6;
+    color: #2C3E50;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    background-color: #ffffff; /* White */
+    background-color: #ffffff;
 }
 
 th, td {
     padding: 8px;
     text-align: left;
     border: 1px solid #ddd;
-    background-color: #ffffff; /* White */
+    background-color: #ffffff;
 }
 
-#department-data th, 
+#department-data th,
 #department-data td {
-    background-color: #EEEAD9;
-    color: #143200;
-    border: 1px solid #143200;
+    background-color: #F4F4F4;
+    color: #2C3E50;
+    border: 1px solid #2C3E50;
 }
 
 #resultTable th, #resultTable td,
@@ -154,23 +154,23 @@ th, td {
     overflow: hidden;
 }
 
-#resultTable th:nth-child(1), td:nth-child(1) { width: 25%; } /* Suburb */
-#resultTable th:nth-child(2), td:nth-child(2) { width: 3%; } /* State */
-#resultTable th:nth-child(3), td:nth-child(3) { width: 3%; } /* Post Code */
-#resultTable th:nth-child(4), td:nth-child(4) { width: 10%; } /* Road Enquiry */
-#resultTable th:nth-child(5), td:nth-child(5) { width: 10%; } /* Road Activity */
-#resultTable th:nth-child(6), td:nth-child(6) { width: 10%; } /* Priority Enquiry */
-#resultTable th:nth-child(7), td:nth-child(7) { width: 10%; } /* Priority Activity */
+#resultTable th:nth-child(1), td:nth-child(1) { width: 25%; }
+#resultTable th:nth-child(2), td:nth-child(2) { width: 3%; }
+#resultTable th:nth-child(3), td:nth-child(3) { width: 3%; }
+#resultTable th:nth-child(4), td:nth-child(4) { width: 10%; }
+#resultTable th:nth-child(5), td:nth-child(5) { width: 10%; }
+#resultTable th:nth-child(6), td:nth-child(6) { width: 10%; }
+#resultTable th:nth-child(7), td:nth-child(7) { width: 10%; }
 
-#department-data th:nth-child(1), #department-data td:nth-child(1) { width: 70%; } /* Department */
-#department-data th:nth-child(2), #department-data td:nth-child(2) { width: 30%; } /* Number */
+#department-data th:nth-child(1), #department-data td:nth-child(1) { width: 70%; }
+#department-data th:nth-child(2), #department-data td:nth-child(2) { width: 30%; }
 
 .results-section thead th {
     position: sticky;
     top: 0;
     z-index: 10;
-    background-color: #143200; /* Fern */
-    color: #EEEAD9; /* Sand */
+    background-color: #2C3E50;
+    color: #F4F4F4;
 }
 
 .results-section tbody {
@@ -186,9 +186,9 @@ th, td {
     width: calc(100% - 20px);
     height: 150px;
     margin-top: 10px;
-    font-family: 'Global Sans', sans-serif; /* Updated to Global Sans */
+    font-family: 'Global Sans', sans-serif;
     padding: 10px;
-    border: 2px solid #143200; /* Fern */
+    border: 2px solid #2C3E50;
     border-radius: 4px;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #FFFFFF;
@@ -200,10 +200,10 @@ th, td {
     width: 100%;
     margin-top: 10px;
     padding: 5px;
-    border: 1px solid #143200; /* Wattle */
+    border: 1px solid #2C3E50;
     border-radius: 4px;
-    background-color: #FFFFFF; /* Sand */
-    color: #143200; /* Fern */
+    background-color: #FFFFFF;
+    color: #2C3E50;
 }
 
 .selector-buttons {
@@ -240,9 +240,8 @@ th, td {
 #department-title {
     font-size: 1.5em;
     text-align: center;
-    color: #143200; /* Wattle */
+    color: #2C3E50;
 }
-  
 
 /* Media Queries */
 @media (max-width: 1000px) {
@@ -260,12 +259,12 @@ th, td {
     }
 
     .search-section {
-        flex: 0 0 20%; /* Always 20% width */
+        flex: 0 0 20%;
         min-width: 200px;
     }
 
     .results-section {
-        flex: 1 1 75%; /* Always 75% width */
+        flex: 1 1 75%;
     }
 
     textarea#notePad {
@@ -286,51 +285,4 @@ th, td {
     .pagination button {
         margin: 5px 0;
     }
-}
-
-
-/* Toggle Button Styles */
-.toggle-button-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-#toggleModeButton {
-    padding: 10px 20px;
-    background-color: #143200; /* Fern */
-    color: #EEEAD9; /* Sand */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-#toggleModeButton:hover {
-    background-color: #CBFF55; /* Wattle */
-    color: #143200; /* Fern */
-}
-
-/* Chat Mode View/Edit Toggle Button */
-.chat-toggle-button {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-}
-
-#chatToggleButton {
-    padding: 5px 10px;
-    background-color: #EEEAD9; /* Sand */
-    color: #143200; /* Fern */
-    border: 1px solid #CBFF55; /* Wattle */
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-#chatToggleButton:hover {
-    background-color: #CBFF55; /* Wattle */
-    color: #143200; /* Fern */
 }
