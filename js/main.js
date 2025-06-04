@@ -1,10 +1,9 @@
 import { loadExcelData, searchSuburbs } from './excel.js';
-import { changePage, setupSortableTable } from './table.js';
+import { changePage } from './table.js';
 import { setupNotepad } from './notepad.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     setupNotepad();
-    setupSortableTable();
     document.getElementById('suburbInput').focus();
 
     document.getElementById('load-data').addEventListener('click', () => {
