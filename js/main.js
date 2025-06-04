@@ -45,6 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('suburbInput').focus();
         }
     });
+
+    const themeToggle = document.getElementById('themeToggle');
+    const userPref = localStorage.getItem('theme');
+    if (userPref === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        const mode = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+        localStorage.setItem('theme', mode);
+    });
 });
 
 function debounce(func, wait) {
