@@ -6,14 +6,17 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
+    <button id="themeToggle" class="theme-toggle-button">Toggle Theme</button>
     <div class="container">
         <div class="left-container">
             <div class="text-selector">
                 <textarea id="notePad" rows="10" cols="50"></textarea>
-                <select id="versionSelector" onchange="loadSelectedVersion()">
-                    <!-- Dynamic options -->
+                <select id="versionSelector">
                 </select>
                 <div class="selector-buttons">
+                    <button id="exportTxt">Export as .txt</button>
+                    <button id="importTxt">Import .txt</button>
+                    <input type="file" id="importFileInput" accept=".txt" style="display: none;">
                     <button id="prevVersion">Previous</button>
                     <button id="nextVersion">Next</button>
                 </div>
@@ -28,8 +31,8 @@
                         <input type="file" id="fileInput" accept=".xlsx">
                         <span id="fileName">No file chosen</span>
                     </div>
-                    <button id="load-data" onclick="loadExcelData()">Load Data</button>
-                    <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
+                    <button id="load-data">Load Data</button>
+                    <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code">
                 </div>
 
                 <div class="results-section">
@@ -46,45 +49,42 @@
                             </tr>
                         </thead>
                         <tbody id="resultTableBody">
-                            <!-- Script Data -->
                         </tbody>
                     </table>
                     <div class="pagination">
-                        <button onclick="changePage(-1)">Previous</button>
+                        <button id="prevPage">Previous</button>
                         <span id="pageInfo"></span>
-                        <button onclick="changePage(1)">Next</button>
+                        <button id="nextPage">Next</button>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="right-container">
             <div class="departments-section">
                 <h1 id="department-title">Department Numbers</h1>
                 <div id="infoContainer">
                     <table id="department-data">
-                        <tr><td>Intermodal/Palletised Team</td><td>xxxxxxxx</td></tr>
-                        <tr><td>Courier Team</td><td>xxxxxxxxx</td></tr>
-                        <tr><td>International Team</td><td>xxxxxxxxx</td></tr>
-                        <tr><td>Credit/Accounts Team</td><td>xxxxxxxxx</td></tr>
-                        <tr><td>Sales Team</td><td>xxxxxxxxx</td></tr>
-                        <tr><td>IT Team</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>Phone Number 1</td><td>xxxxxxxx</td></tr>
+                        <tr><td>Phone Number 2</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>Phone Number 3</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>Phone Number 4</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>Phone Number 5</td><td>xxxxxxxxx</td></tr>
+                        <tr><td>Phone Number 6</td><td>xxxxxxxxx</td></tr>
                     </table>
                 </div>
             </div>
-            <div class="transcript-generator">
-                <textarea id="transcript-input" placeholder="Paste your transcript here..."></textarea>
-                <button id="generate-pdf">Generate PDF</button>
-            </div>              
         </div>
     </div>
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    <script src="script.js"></script>
+
+    <script type="module" src="js/main.js"></script>
+
+   
     <script>
-        // Display file name when a file is selected
-        document.getElementById('fileInput').addEventListener('change', function() {
+        document.getElementById('fileInput').addEventListener('change', function () {
             const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
             document.getElementById('fileName').textContent = fileName;
         });
