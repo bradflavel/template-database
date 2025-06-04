@@ -1,6 +1,8 @@
 let currentPage = 1;
 let rowsPerPage = 4;
 let currentData = [];
+let currentSortColumn = null;
+let currentSortAsc = true;
 
 export function resetPagination(newData = null) {
     currentPage = 1;
@@ -55,6 +57,46 @@ export function changePage(delta) {
         currentPage = nextPage;
         displayPage(dataSet, currentPage);
     }
+}
+
+export function setupSortableTable() {
+    const headers = document.querySelectorAll('#resultTable thead th');
+    headers.forEach((th, index) => {
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', () => {
+            const dataset = currentData.length > 0 ? currentData : getRawData();
+            if (!dataset || dataset.length === 0) return;
+
+            if (currentSortColumn === index) {
+                currentSortAsc = !currentSortAsc;
+            } else {
+                currentSortColumn = index;
+                currentSortAsc = true;
+            }
+
+            const sorted = [...dataset].sort((a, b) => {
+                const valA = a[index] || '';
+                const valB = b[index] || '';
+                return currentSortAsc
+                    ? valA.localeCompare(valB, undefined, { numeric: true })
+                    : valB.localeCompare(valA, undefined, { numeric: true });
+            });
+
+            resetPagination(sorted);
+            filterAndDisplayRows(sorted, 1);
+            updateSortIndicators(index, currentSortAsc);
+        });
+    });
+}
+
+function updateSortIndicators(activeIndex, asc) {
+    const headers = document.querySelectorAll('#resultTable thead th');
+    headers.forEach((th, idx) => {
+        th.textContent = th.textContent.replace(/ ▲| ▼/, '');
+        if (idx === activeIndex) {
+            th.textContent += asc ? ' ▲' : ' ▼';
+        }
+    });
 }
 
 import { getRawData } from './excel.js';
