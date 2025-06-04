@@ -8,11 +8,11 @@
 }
 
 body.dark-theme {
-    --bg: #1E1E1E;
-    --text: #f0f0f0;
-    --accent: #88BCA8;
-    --hover: #4C625F;
-    --card: #2B2B2B;
+    --bg: #121212;    
+    --text: #E0E0E0;    
+    --accent: #6FCF97;    
+    --hover: #2E7D6F;     
+    --card: #1E1E1E;      
 }
 
 /* General Styles */
@@ -263,6 +263,26 @@ th, td {
 #department-title {
     font-size: 1.5em;
     text-align: center;
+    color: var(--text);
+}
+
+.theme-toggle-button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 999;
+    background-color: var(--text);
+    color: var(--bg);
+    border: 1px solid var(--accent);
+    padding: 10px 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle-button:hover {
+    background-color: var(--hover);
     color: var(--text);
 }
 
