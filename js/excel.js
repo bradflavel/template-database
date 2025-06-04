@@ -1,9 +1,14 @@
-import { displayPage, resetPagination, filterAndDisplayRows } from './table.js';
+import { displayPage, resetPagination, filterAndDisplayRows, renderHeaders } from './table.js';
 
 let rawData = [];
+let currentHeaders = [];
 
 export function getRawData() {
     return rawData;
+}
+
+export function getCurrentHeaders() {
+    return currentHeaders;
 }
 
 export function loadExcelData(file) {
@@ -18,20 +23,24 @@ export function loadExcelData(file) {
 }
 
 function processData(json) {
-    rawData = json.map(row => row.map(cell => cell.toString()));
+    const [headers, ...rows] = json;
+
+    rawData = rows.map(row => row.map(cell => cell.toString()));
+    currentHeaders = headers.map(header => header?.toString?.() || 'Column');
+
     resetPagination();
     displayPage(rawData, 1);
+    renderHeaders(currentHeaders);
 }
 
 export function searchSuburbs(query) {
     const lower = query.toLowerCase().trim();
-    if (lower === "") {
+    if (!lower) {
         resetPagination();
         displayPage(rawData, 1);
     } else {
         const filtered = rawData.filter(row =>
-            (row[0] && row[0].toLowerCase().includes(lower)) ||
-            (row[2] && row[2].toLowerCase().includes(lower))
+            row.some(cell => cell?.toLowerCase?.().includes(lower))
         );
         resetPagination(filtered);
         filterAndDisplayRows(filtered, 1);
