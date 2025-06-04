@@ -9,39 +9,13 @@
     <div class="container">
         <div class="left-container">
             <div class="text-selector">
-                <div class="toggle-button-container">
-                    <button id="toggleModeButton" onclick="toggleMode()">Call Mode</button>
+                <textarea id="notePad" rows="10" cols="50"></textarea>
+                <select id="versionSelector">
+                </select>
+                <div class="selector-buttons">
+                    <button id="prevVersion">Previous</button>
+                    <button id="nextVersion">Next</button>
                 </div>
-                <div id="chatModeContainer" style="display:none;"> <!-- Hide this by default -->
-                    <div class="chat-toggle-button">
-                        <button id="chatToggleButton" onclick="toggleChatViewEdit()">View Mode</button>
-                    </div>
-                    
-                    <!-- Notepad/Textarea - Same as Calls for now -->
-                    <div class="text-selector">
-                        <textarea id="chatNotePad" rows="10" cols="50"></textarea>
-                    </div>
-                    <select id="versionSelector" onchange="loadSelectedVersion()">
-                        <!-- Dynamic options -->
-                    </select>
-                    <div class="selector-buttons">
-                        <button id="prevVersion">Previous</button>
-                        <button id="nextVersion">Next</button>
-                    </div>
-                </div>
-                <div id="callModeContainer">
-                    <div class="text-selector">
-                        <textarea id="notePad" rows="10" cols="50"></textarea>
-                    </div>
-                    <select id="versionSelector" onchange="loadSelectedVersion()">
-                        <!-- Dynamic options -->
-                    </select>
-                    <div class="selector-buttons">
-                        <button id="prevVersion">Previous</button>
-                        <button id="nextVersion">Next</button>
-                    </div>
-                </div>
-                
             </div>
 
             <div class="search-results-container">
@@ -53,8 +27,8 @@
                         <input type="file" id="fileInput" accept=".xlsx">
                         <span id="fileName">No file chosen</span>
                     </div>
-                    <button id="load-data" onclick="loadExcelData()">Load Data</button>
-                    <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code" oninput="debouncedSearchSuburb()">
+                    <button id="load-data">Load Data</button>
+                    <input type="text" id="suburbInput" placeholder="Enter Suburb Name or Post Code">
                 </div>
 
                 <div class="results-section">
@@ -71,17 +45,17 @@
                             </tr>
                         </thead>
                         <tbody id="resultTableBody">
-                            <!-- Script Data -->
                         </tbody>
                     </table>
                     <div class="pagination">
-                        <button onclick="changePage(-1)">Previous</button>
+                        <button id="prevPage">Previous</button>
                         <span id="pageInfo"></span>
-                        <button onclick="changePage(1)">Next</button>
+                        <button id="nextPage">Next</button>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="right-container">
             <div class="departments-section">
                 <h1 id="department-title">Department Numbers</h1>
@@ -95,17 +69,18 @@
                         <tr><td>IT Team</td><td>xxxxxxxxx</td></tr>
                     </table>
                 </div>
-            </div>          
+            </div>
         </div>
     </div>
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    <script src="script.js"></script>
+
+    <script type="module" src="js/main.js"></script>
+
+   
     <script>
-        // Display file name when a file is selected
-        document.getElementById('fileInput').addEventListener('change', function() {
+        document.getElementById('fileInput').addEventListener('change', function () {
             const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
             document.getElementById('fileName').textContent = fileName;
         });
