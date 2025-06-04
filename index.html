@@ -9,14 +9,39 @@
     <div class="container">
         <div class="left-container">
             <div class="text-selector">
-                <textarea id="notePad" rows="10" cols="50"></textarea>
-                <select id="versionSelector" onchange="loadSelectedVersion()">
-                    <!-- Dynamic options -->
-                </select>
-                <div class="selector-buttons">
-                    <button id="prevVersion">Previous</button>
-                    <button id="nextVersion">Next</button>
+                <div class="toggle-button-container">
+                    <button id="toggleModeButton" onclick="toggleMode()">Call Mode</button>
                 </div>
+                <div id="chatModeContainer" style="display:none;"> <!-- Hide this by default -->
+                    <div class="chat-toggle-button">
+                        <button id="chatToggleButton" onclick="toggleChatViewEdit()">View Mode</button>
+                    </div>
+                    
+                    <!-- Notepad/Textarea - Same as Calls for now -->
+                    <div class="text-selector">
+                        <textarea id="chatNotePad" rows="10" cols="50"></textarea>
+                    </div>
+                    <select id="versionSelector" onchange="loadSelectedVersion()">
+                        <!-- Dynamic options -->
+                    </select>
+                    <div class="selector-buttons">
+                        <button id="prevVersion">Previous</button>
+                        <button id="nextVersion">Next</button>
+                    </div>
+                </div>
+                <div id="callModeContainer">
+                    <div class="text-selector">
+                        <textarea id="notePad" rows="10" cols="50"></textarea>
+                    </div>
+                    <select id="versionSelector" onchange="loadSelectedVersion()">
+                        <!-- Dynamic options -->
+                    </select>
+                    <div class="selector-buttons">
+                        <button id="prevVersion">Previous</button>
+                        <button id="nextVersion">Next</button>
+                    </div>
+                </div>
+                
             </div>
 
             <div class="search-results-container">
@@ -70,11 +95,7 @@
                         <tr><td>IT Team</td><td>xxxxxxxxx</td></tr>
                     </table>
                 </div>
-            </div>
-            <div class="transcript-generator">
-                <textarea id="transcript-input" placeholder="Paste your transcript here..."></textarea>
-                <button id="generate-pdf">Generate PDF</button>
-            </div>              
+            </div>          
         </div>
     </div>
 

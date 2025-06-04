@@ -242,39 +242,6 @@ th, td {
     text-align: center;
     color: #143200; /* Wattle */
 }
-
-.transcript-generator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-  }
-  
-  #transcript-input {
-    width: 80%;
-    height: 200px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: 'Global Sans', Arial, sans-serif;
-    font-size: 16px;
-    background-color: #EEEAD9; /* Sand color */
-  }
-  
-  #generate-pdf {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #00694D; /* Eucalyptus color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #generate-pdf:hover {
-    background-color: #004C3A; /* Darker shade of Eucalyptus */
-  }
   
 
 /* Media Queries */
@@ -319,4 +286,51 @@ th, td {
     .pagination button {
         margin: 5px 0;
     }
+}
+
+
+/* Toggle Button Styles */
+.toggle-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#toggleModeButton {
+    padding: 10px 20px;
+    background-color: #143200; /* Fern */
+    color: #EEEAD9; /* Sand */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#toggleModeButton:hover {
+    background-color: #CBFF55; /* Wattle */
+    color: #143200; /* Fern */
+}
+
+/* Chat Mode View/Edit Toggle Button */
+.chat-toggle-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+#chatToggleButton {
+    padding: 5px 10px;
+    background-color: #EEEAD9; /* Sand */
+    color: #143200; /* Fern */
+    border: 1px solid #CBFF55; /* Wattle */
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#chatToggleButton:hover {
+    background-color: #CBFF55; /* Wattle */
+    color: #143200; /* Fern */
 }
