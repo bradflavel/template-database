@@ -28,4 +28,4 @@ A fast, themeable, client-side web tool for viewing, searching, and working with
 
 ## Demo
 
-Coming soon
+Test it out here: https://bradflavel.github.io/spreadsheet-viewer/
