@@ -85,6 +85,54 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsText(file);
     });
 
+    const deptTable = document.getElementById('department-data');
+    const savedDept = localStorage.getItem('departmentInfo');
+    if (savedDept) {
+        const data = JSON.parse(savedDept);
+        [...deptTable.rows].forEach((row, i) => {
+            if (data[i]) {
+                row.cells[0].textContent = data[i][0];
+                row.cells[1].textContent = data[i][1];
+            }
+        });
+    }
+
+    let editingDept = false;
+
+    document.getElementById('editDepartmentBtn').addEventListener('click', () => {
+        editingDept = !editingDept;
+        const button = document.getElementById('editDepartmentBtn');
+
+        [...deptTable.rows].forEach(row => {
+            [...row.cells].forEach((cell, colIndex) => {
+                if (editingDept) {
+                    const input = document.createElement('input');
+                    input.value = cell.textContent;
+                    input.style.width = '100%';
+                    cell.textContent = '';
+                    cell.appendChild(input);
+                } else {
+                    const input = cell.querySelector('input');
+                    if (input) {
+                        cell.textContent = input.value;
+                    }
+                }
+            });
+        });
+
+        if (!editingDept) {
+            const newData = [...deptTable.rows].map(row => [
+                row.cells[0].textContent,
+                row.cells[1].textContent
+            ]);
+            localStorage.setItem('departmentInfo', JSON.stringify(newData));
+            alert('Info saved!');
+        }
+
+        button.textContent = editingDept ? 'Save Info' : 'Edit Info';
+    });
+
+
 });
 
 function debounce(func, wait) {
