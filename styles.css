@@ -75,12 +75,45 @@ button:hover {
   flex-shrink: 0;
 }
 
-/* === Template Grid === */
-.template-grid {
+/* === Template Grid and Columns === */
+#templateGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--column-count), 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#templateGrid.template-scroll-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: flex-start;
+  flex-direction: row;
+  justify-content: center; /* or space-between or space-evenly */
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+  flex-wrap: nowrap; /* keeps horizontal scrolling intact */
+}
+
+
+.template-column {
+  flex: 1 1 240px; /* ✅ grow equally with min-width of 240px */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--accent);
+  padding: 0.5rem;
+  background: var(--card);
+}
+
+
+.template-column h4 {
+  text-align: center;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 0.25rem;
 }
 
 .template-box {
@@ -91,15 +124,16 @@ button:hover {
   cursor: pointer;
   transition: background-color 0.2s ease;
   position: relative;
-  max-width: 300px;
-  min-width: 220px;
+  white-space: pre-wrap;
   word-wrap: break-word;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .template-box:hover {
   background-color: var(--hover);
 }
 
+/* === Icons === */
 .trash-icon {
   position: absolute;
   top: 6px;
@@ -111,10 +145,22 @@ button:hover {
 /* === Theme Toggle Button === */
 .theme-toggle-button {
   position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 999;
-  padding: 10px 14px;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--text);
+  color: var(--bg);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 9999;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--hover);
+  color: var(--text);
 }
 
 /* === Modal === */
@@ -150,7 +196,7 @@ button:hover {
   cursor: pointer;
 }
 
-/* Modal Sections */
+/* === Modal Sections === */
 .modal-options {
   display: flex;
   flex-wrap: wrap;
@@ -167,7 +213,6 @@ button:hover {
   height: 150px;
 }
 
-/* === Single Template Form === */
 .template-form {
   display: flex;
   flex-wrap: wrap;
@@ -178,6 +223,55 @@ button:hover {
 .template-form input {
   flex: 1 1 calc(50% - 10px);
   min-width: 120px;
+}
+
+/* === Settings Modal === */
+.settings-section {
+  margin-bottom: 1em;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider::before {
+  transform: translateX(26px);
 }
 
 /* === Utility === */
@@ -193,31 +287,58 @@ button:hover {
   }
 
   .template-form textarea,
-  .template-form input {
+  .template-form input,
+  .template-box {
     flex: 1 1 100%;
   }
-
-  .template-box {
-    min-width: 100%;
-  }
 }
 
-.theme-toggle-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--text);
-  color: var(--bg);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 9999;
-  transition: background-color 0.3s, color 0.3s;
+#templateGrid.template-scroll-row::-webkit-scrollbar {
+  height: 8px;
 }
 
-.theme-toggle-button:hover {
-  background-color: var(--hover);
-  color: var(--text);
+#templateGrid.template-scroll-row::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 4px;
 }
+
+#templateGrid.template-scroll-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body, html {
+  overflow-x: hidden;
+}
+
+
+.template-column {
+  flex: 1 1 240px;       
+  max-width: 450px;       
+  min-width: 240px;      
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--accent);
+  padding: 0.5rem;
+  background: var(--card);
+}
+
+
+
+#templateGridWrapper {
+  overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#templateGrid.template-scroll-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  width: fit-content;
+}
+
+
