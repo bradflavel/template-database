@@ -1,38 +1,57 @@
-import { getTemplates, setTemplates } from './templateManager.js';
+import {
+  getTemplates,
+  setTemplates,
+  deleteTemplate,
+  reorderCategories,
+  reorderTemplatesInCategory
+} from './templateManager.js';
 
-let deleteMode = false;
+let editMode = false;
 
-function setDeleteMode(value) {
-  deleteMode = value;
+export function setEditMode(value) {
+  editMode = value;
 }
 
-function isDeleteMode() {
-  return deleteMode;
+export function isEditMode() {
+  return editMode;
 }
 
-function renderTemplates(searchQuery = "") {
+export function renderTemplates(searchQuery = "") {
   const container = document.getElementById("templateGrid");
   container.innerHTML = "";
 
-  const templates = getTemplates();
-  const filtered = templates.filter((t) =>
-    [t.text, t.category, t.tags].some((val) =>
-      val.toLowerCase().includes(searchQuery)
-    )
+  const { categoryOrder, templatesByCategory } = getTemplates();
+
+  // Flatten templates for search
+  const flatTemplates = categoryOrder.flatMap((category) =>
+    (templatesByCategory[category] || []).map((t) => ({
+      ...t,
+      category
+    }))
   );
 
-  if (filtered.length === 0) {
+  // Filter if a search query is present
+  const filtered = searchQuery
+    ? flatTemplates.filter((t) =>
+        [t.text, t.category, t.tags].some((val) =>
+          val?.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      )
+    : flatTemplates;
+
+  // Regroup after filtering
+  const grouped = {};
+  filtered.forEach((t) => {
+    if (!grouped[t.category]) grouped[t.category] = [];
+    grouped[t.category].push(t);
+  });
+
+  // Skip if no matches
+  const visibleCategories = categoryOrder.filter((cat) => grouped[cat]);
+  if (visibleCategories.length === 0) {
     container.innerHTML = "<p>No templates found.</p>";
     return;
   }
-
-  // Group templates by category
-  const grouped = {};
-  filtered.forEach((t) => {
-    const cat = t.category || "Uncategorized";
-    if (!grouped[cat]) grouped[cat] = [];
-    grouped[cat].push(t);
-  });
 
   // Reset container layout
   container.className = "template-scroll-row";
@@ -47,30 +66,40 @@ function renderTemplates(searchQuery = "") {
   container.style.maxWidth = "unset";
 
   // Render each category column
-  Object.entries(grouped).forEach(([category, items]) => {
+  visibleCategories.forEach((category, colIndex) => {
     const colDiv = document.createElement("div");
     colDiv.className = "template-column";
+    colDiv.dataset.category = category;
+
+    if (editMode) {
+      colDiv.setAttribute("draggable", "true");
+      colDiv.classList.add("draggable-column");
+    }
 
     const header = document.createElement("h4");
     header.textContent = category;
     colDiv.appendChild(header);
 
-    items.forEach((t) => {
+    const items = grouped[category];
+    items.forEach((t, indexInCategory) => {
       const div = document.createElement("div");
       div.className = "template-box";
       div.textContent = t.text;
       div.title = `Category: ${t.category}\nTags: ${t.tags}`;
+      div.dataset.index = indexInCategory;
+      div.dataset.category = t.category;
 
-      if (deleteMode) {
+      if (editMode) {
+        div.setAttribute("draggable", "true");
+        div.classList.add("draggable-template");
+
         const trash = document.createElement("span");
         trash.innerHTML = "🗑️";
         trash.className = "trash-icon";
         trash.onclick = (e) => {
           e.stopPropagation();
           if (confirm("Delete this template?")) {
-            const all = getTemplates();
-            const updated = all.filter((tpl) => tpl !== t);
-            setTemplates(updated);
+            deleteTemplate(t.category, indexInCategory);
             renderTemplates(searchQuery);
           }
         };
@@ -78,7 +107,7 @@ function renderTemplates(searchQuery = "") {
       }
 
       div.onclick = () => {
-        if (!deleteMode) {
+        if (!editMode) {
           navigator.clipboard.writeText(t.text);
           div.style.backgroundColor = "#DFF0D8";
           setTimeout(() => (div.style.backgroundColor = ""), 300);
@@ -90,10 +119,94 @@ function renderTemplates(searchQuery = "") {
 
     container.appendChild(colDiv);
   });
+
+  // Future hook: enable drag-and-drop only if editMode is true
+  if (editMode) {
+    // Setup drag-and-drop (coming in Part 3)
+    setupColumnDrag(container);
+    setupTemplateDrag();
+  }
 }
 
-export {
-  renderTemplates,
-  setDeleteMode,
-  isDeleteMode
-};
+function setupColumnDrag(container) {
+  let draggedCol = null;
+
+  container.querySelectorAll(".template-column").forEach((col) => {
+    col.addEventListener("dragstart", () => {
+      draggedCol = col;
+      col.classList.add("dragging");
+    });
+
+    col.addEventListener("dragend", () => {
+      draggedCol = null;
+      col.classList.remove("dragging");
+
+      // Save new order
+      const newOrder = [...container.children].map(
+        (c) => c.dataset.category
+      );
+      reorderCategories(newOrder);
+    });
+
+    col.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const after = col;
+      if (after === draggedCol) return;
+
+      const all = [...container.children];
+      const draggedIndex = all.indexOf(draggedCol);
+      const targetIndex = all.indexOf(after);
+
+      if (draggedIndex < targetIndex) {
+        container.insertBefore(draggedCol, after.nextSibling);
+      } else {
+        container.insertBefore(draggedCol, after);
+      }
+    });
+  });
+}
+
+function setupTemplateDrag() {
+  let draggedCard = null;
+
+  document.querySelectorAll(".template-box").forEach((card) => {
+    card.addEventListener("dragstart", () => {
+      draggedCard = card;
+      card.classList.add("dragging");
+    });
+
+    card.addEventListener("dragend", () => {
+      if (!draggedCard) return;
+
+      const category = draggedCard.dataset.category;
+      const container = draggedCard.parentElement;
+      draggedCard.classList.remove("dragging");
+
+      const newList = [...container.querySelectorAll(".template-box")]
+        .map((el) => ({
+          text: el.childNodes[0].textContent,
+          tags: el.title.split("Tags: ")[1] || "",
+        }));
+
+      reorderTemplatesInCategory(category, newList);
+      draggedCard = null;
+    });
+
+    card.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const current = card;
+      if (current === draggedCard) return;
+
+      const parent = current.parentElement;
+      const nodes = [...parent.querySelectorAll(".template-box")];
+      const draggedIndex = nodes.indexOf(draggedCard);
+      const targetIndex = nodes.indexOf(current);
+
+      if (draggedIndex < targetIndex) {
+        parent.insertBefore(draggedCard, current.nextSibling);
+      } else {
+        parent.insertBefore(draggedCard, current);
+      }
+    });
+  });
+}

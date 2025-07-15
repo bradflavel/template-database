@@ -1,6 +1,14 @@
-import { addTemplate, exportTemplates, importTemplatesFromFile } from './templateManager.js';
-import { renderTemplates, setDeleteMode, isDeleteMode } from './templateRenderer.js';
-import { setupSettingsModal } from './settingsManager.js';
+import {
+  addTemplate,
+  exportTemplates,
+  importTemplatesFromFile
+} from './templateManager.js';
+
+import {
+  renderTemplates,
+  setEditMode,
+  isEditMode
+} from './templateRenderer.js';
 
 export function setupTemplateLoader() {
   const searchBox = document.getElementById("searchBox");
@@ -11,23 +19,30 @@ export function setupTemplateLoader() {
   const bulkBtn = document.getElementById("bulkTemplateMode");
   const exportBtn = document.getElementById("exportBtn");
   const importBtn = document.getElementById("importBtn");
-  const deleteBtn = document.getElementById("deleteModeBtn");
 
   const singleSection = document.getElementById("singleTemplateSection");
   const bulkSection = document.getElementById("bulkTemplateSection");
 
+  // Add single template
   document.getElementById("addTemplateBtn").onclick = addSingleTemplate;
+
+  // Bulk add
   document.getElementById("bulkAddBtn").onclick = bulkAddTemplates;
+
+  // Export
   exportBtn.onclick = exportTemplates;
+
+  // Import
   importBtn.onclick = () => document.getElementById("jsonFile").click();
   document.getElementById("jsonFile").onchange = (e) =>
     importTemplatesFromFile(e.target.files[0], () =>
       renderTemplates(searchBox.value.trim().toLowerCase())
     );
 
+  // Toggle modal for adding templates
   manageBtn.onclick = () => {
-    if (isDeleteMode()) {
-      setDeleteMode(false);
+    if (isEditMode()) {
+      setEditMode(false);
       manageBtn.textContent = "Manage Templates";
       renderTemplates(searchBox.value.trim().toLowerCase());
     } else {
@@ -37,18 +52,21 @@ export function setupTemplateLoader() {
     }
   };
 
-  deleteBtn.onclick = () => {
-    setDeleteMode(true);
+  // Enter Edit Mode (used for reorder/delete)
+  document.getElementById("editModeBtn").onclick = () => {
+    setEditMode(true);
     modal.classList.add("hidden");
     manageBtn.textContent = "Finished Editing";
     renderTemplates(searchBox.value.trim().toLowerCase());
   };
 
+  // Modal close
   closeModal.onclick = () => modal.classList.add("hidden");
   window.onclick = (e) => {
     if (e.target === modal) modal.classList.add("hidden");
   };
 
+  // Show sections
   singleBtn.onclick = () => {
     singleSection.classList.remove("hidden");
     bulkSection.classList.add("hidden");
@@ -59,19 +77,17 @@ export function setupTemplateLoader() {
     singleSection.classList.add("hidden");
   };
 
+  // Search filtering
   searchBox.addEventListener("input", () => {
     renderTemplates(searchBox.value.trim().toLowerCase());
   });
 
-  // document.getElementById("themeToggle").onclick = () => {
-  //   document.body.classList.toggle("dark-theme");
-  // };
-
-  // setupSettingsModal(renderTemplates);
+  // Initial render
   renderTemplates("");
 }
 
-// Helpers
+// === Helper Functions ===
+
 function addSingleTemplate() {
   const text = document.getElementById("templateText").value.trim();
   const category = document.getElementById("templateCategory").value.trim();

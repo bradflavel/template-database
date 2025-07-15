@@ -25,6 +25,7 @@
   </div>
 
   <!-- Manage Templates Modal -->
+  <!-- Manage Templates Modal -->
   <div id="templateModal" class="modal hidden">
     <div class="modal-content">
       <span class="close-btn" id="closeModal">&times;</span>
@@ -35,7 +36,7 @@
         <button id="bulkTemplateMode">Bulk Upload Templates</button>
         <button id="importBtn">Import JSON</button>
         <button id="exportBtn">Export JSON</button>
-        <button id="deleteModeBtn">Delete Templates</button>
+        <button id="editModeBtn">Edit Templates</button> <!-- ✅ Renamed from deleteModeBtn -->
       </div>
 
       <div id="singleTemplateSection" class="modal-section hidden">
@@ -51,11 +52,12 @@
       <div id="bulkTemplateSection" class="modal-section hidden">
         <h3>Bulk Upload</h3>
         <p>Use <strong>||</strong> between values and each line for a new template:</p>
-        <textarea id="bulkInput" placeholder="Example: Hello||General||greeting\nThanks||Support||follow-up"></textarea>
+        <textarea id="bulkInput" placeholder="Example: Hello||General||greeting&#10;Thanks||Support||follow-up"></textarea>
         <button id="bulkAddBtn">Add Templates</button>
       </div>
     </div>
   </div>
+
 
   <!-- Settings Modal -->
   <div id="settingsModal" class="modal hidden">

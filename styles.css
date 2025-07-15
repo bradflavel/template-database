@@ -342,3 +342,8 @@ body, html {
 }
 
 
+.template-box.dragging,
+.template-column.dragging {
+  opacity: 0.5;
+  border: 2px dashed var(--accent);
+}
