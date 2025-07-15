@@ -70,6 +70,8 @@ export function renderTemplates(searchQuery = "") {
     const colDiv = document.createElement("div");
     colDiv.className = "template-column";
     colDiv.dataset.category = category;
+    // colDiv.style.maxWidth = "380px";
+    // colDiv.style.flex = "0 0 auto";
 
     if (editMode) {
       colDiv.setAttribute("draggable", "true");
@@ -77,17 +79,38 @@ export function renderTemplates(searchQuery = "") {
     }
 
     const header = document.createElement("h4");
-    header.textContent = category;
+
+    if (editMode) {
+      const handle = document.createElement("span");
+      handle.className = "drag-handle";
+      handle.innerHTML = "☰";
+      handle.setAttribute("draggable", "false");
+      handle.style.pointerEvents = "none";
+      header.appendChild(handle);
+    }
+
+    header.appendChild(document.createTextNode(category));
     colDiv.appendChild(header);
 
     const items = grouped[category];
     items.forEach((t, indexInCategory) => {
       const div = document.createElement("div");
       div.className = "template-box";
-      div.textContent = t.text;
       div.title = `Category: ${t.category}\nTags: ${t.tags}`;
       div.dataset.index = indexInCategory;
       div.dataset.category = t.category;
+
+      if (editMode) {
+        const handle = document.createElement("span");
+        handle.className = "drag-handle";
+        handle.innerHTML = "☰";
+        handle.setAttribute("draggable", "false");
+        handle.style.pointerEvents = "none";
+        div.appendChild(handle);
+      }
+
+      const textNode = document.createTextNode(t.text);
+      div.appendChild(textNode);
 
       if (editMode) {
         div.setAttribute("draggable", "true");
@@ -120,12 +143,17 @@ export function renderTemplates(searchQuery = "") {
     container.appendChild(colDiv);
   });
 
-  // Future hook: enable drag-and-drop only if editMode is true
   if (editMode) {
-    // Setup drag-and-drop (coming in Part 3)
     setupColumnDrag(container);
     setupTemplateDrag();
   }
+
+  const size = parseFloat(localStorage.getItem("textSize")) || 1.0;
+  const boxes = document.querySelectorAll(".template-box");
+  boxes.forEach(box => {
+    box.style.fontSize = size + "em";
+  });
+
 }
 
 function setupColumnDrag(container) {
@@ -210,3 +238,4 @@ function setupTemplateDrag() {
     });
   });
 }
+
