@@ -78,7 +78,7 @@ export function renderTemplates(searchQuery = "") {
       colDiv.classList.add("draggable-column");
     }
 
-    const header = document.createElement("h4");
+    const header = document.createElement("h3");
 
     if (editMode) {
       const handle = document.createElement("span");

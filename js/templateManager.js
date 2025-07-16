@@ -77,18 +77,48 @@ export function reorderTemplatesInCategory(category, newTemplateList) {
 }
 
 // Export to JSON file
-export function exportTemplates() {
-  const data = getTemplates();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
+export async function exportTemplates(templates) {
+  const fileName = "templates.json";
+  const json = JSON.stringify(templates, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "templates.json";
-  a.click();
+  // Check if the browser supports the File System Access API
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: fileName,
+        types: [
+          {
+            description: "JSON Files",
+            accept: { "application/json": [".json"] }
+          }
+        ]
+      });
 
-  URL.revokeObjectURL(url);
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+
+      alert("Templates saved successfully!");
+    } catch (err) {
+      if (err.name !== "AbortError") {
+        console.error("Export failed:", err);
+        alert("Export failed. See console for details.");
+      }
+    }
+  } else {
+    // Fallback for Firefox, Safari, etc.
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    alert("Download started (fallback method).");
+  }
 }
+
 
 // Import from file and overwrite local data
 export function importTemplatesFromFile(file, callback) {

@@ -101,7 +101,7 @@ button:hover {
 .template-column {
   flex: 1 1 0;
   min-width: 220px;
-  max-width: 380px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -113,7 +113,7 @@ button:hover {
 
 
 
-.template-column h4 {
+.template-column h3 {
   text-align: center;
   border-bottom: 1px solid var(--accent);
   padding-bottom: 0.25rem;

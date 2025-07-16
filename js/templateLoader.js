@@ -1,8 +1,10 @@
 import {
   addTemplate,
   exportTemplates,
-  importTemplatesFromFile
+  importTemplatesFromFile,
+  getTemplates 
 } from './templateManager.js';
+
 
 import {
   renderTemplates,
@@ -30,7 +32,10 @@ export function setupTemplateLoader() {
   document.getElementById("bulkAddBtn").onclick = bulkAddTemplates;
 
   // Export
-  exportBtn.onclick = exportTemplates;
+  exportBtn.onclick = async () => {
+    const templates = getTemplates();
+    await exportTemplates(templates);
+  };
 
   // Import
   importBtn.onclick = () => document.getElementById("jsonFile").click();
@@ -62,9 +67,9 @@ export function setupTemplateLoader() {
 
   // Modal close
   closeModal.onclick = () => modal.classList.add("hidden");
-  window.onclick = (e) => {
-    if (e.target === modal) modal.classList.add("hidden");
-  };
+  // window.onclick = (e) => {
+  //   if (e.target === modal) modal.classList.add("hidden");
+  // };
 
   // Show sections
   singleBtn.onclick = () => {

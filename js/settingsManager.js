@@ -55,9 +55,9 @@ export function setupSettingsModal(renderTemplates) {
 
   // Close modal
   closeSettings.onclick = () => settingsModal.classList.add("hidden");
-  window.addEventListener("click", (e) => {
-    if (e.target === settingsModal) settingsModal.classList.add("hidden");
-  });
+  // window.addEventListener("click", (e) => {
+  //   if (e.target === settingsModal) settingsModal.classList.add("hidden");
+  // });
 
   // Apply settings on load
   applyTextSize(currentSize);
