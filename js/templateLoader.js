@@ -14,6 +14,13 @@ import {
 
 export function setupTemplateLoader() {
   const searchBox = document.getElementById("searchBox");
+  const clearSearchBtn = document.getElementById("clearSearchBtn");
+
+  clearSearchBtn.onclick = () => {
+    searchBox.value = "";
+    renderTemplates(""); // re-render all templates with no filter
+  };
+  
   const manageBtn = document.getElementById("manageTemplatesBtn");
   const closeModal = document.getElementById("closeModal");
   const modal = document.getElementById("templateModal");
