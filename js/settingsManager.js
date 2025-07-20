@@ -8,8 +8,8 @@ export function setupSettingsModal(renderTemplates) {
   const decreaseBtn = document.getElementById("decreaseTextSize");
   const textSizeValue = document.getElementById("textSizeValue");
 
-  const MIN_SIZE = 0.8;
-  const MAX_SIZE = 1.4;
+  const MIN_SIZE = 0.5;
+  const MAX_SIZE = 1.5;
   const STEP = 0.1;
 
   let currentSize = parseFloat(localStorage.getItem("textSize")) || 1.0;

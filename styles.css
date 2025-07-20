@@ -100,8 +100,8 @@ button:hover {
 
 .template-column {
   flex: 1 1 0;
-  min-width: 220px;
-  max-width: 600px;
+  min-width: 240px;
+  max-width: 1fr;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -109,7 +109,21 @@ button:hover {
   padding: 0.5rem;
   background: var(--card);
   box-sizing: border-box;
+
+  /* Enable vertical scroll within column */
+  max-height: calc(100vh - 130px); /* Adjust based on your header/top bar height */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Hide scrollbar visually */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
 }
+.template-column::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+
 
 
 
@@ -315,20 +329,6 @@ input:checked + .slider::before {
 body, html {
   overflow-x: hidden;
 }
-
-
-.template-column {
-  flex: 1 1 0; /* Grow freely, but don’t force minimum width */
-  min-width: 240px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  border: 1px solid var(--accent);
-  padding: 0.5rem;
-  background: var(--card);
-}
-
 
 #templateGridWrapper {
   overflow-x: auto;

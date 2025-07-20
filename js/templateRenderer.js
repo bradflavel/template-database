@@ -99,6 +99,7 @@ export function renderTemplates(searchQuery = "") {
       div.title = `Category: ${t.category}\nTags: ${t.tags}`;
       div.dataset.index = indexInCategory;
       div.dataset.category = t.category;
+      div.dataset.tags = t.tags || "";
 
       if (editMode) {
         const handle = document.createElement("span");
@@ -109,7 +110,9 @@ export function renderTemplates(searchQuery = "") {
         div.appendChild(handle);
       }
 
-      const textNode = document.createTextNode(t.text);
+      const textNode = document.createElement("span");
+      textNode.className = "template-text"; 
+      textNode.textContent = t.text;
       div.appendChild(textNode);
 
       if (editMode) {
@@ -210,11 +213,14 @@ function setupTemplateDrag() {
       const container = draggedCard.parentElement;
       draggedCard.classList.remove("dragging");
 
-      const newList = [...container.querySelectorAll(".template-box")]
-        .map((el) => ({
-          text: el.childNodes[0].textContent,
-          tags: el.title.split("Tags: ")[1] || "",
-        }));
+      const newList = [...container.querySelectorAll(".template-box")].map((el) => {
+        return {
+          text: el.querySelector(".template-text")?.textContent || "",
+          tags: el.dataset.tags || "",
+          category 
+        };
+      });
+
 
       reorderTemplatesInCategory(category, newList);
       draggedCard = null;
