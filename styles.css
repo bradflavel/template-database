@@ -436,3 +436,32 @@ body, html {
   background-color: var(--hover);
 }
 
+/* Edit Modal Specific */
+#editModal textarea,
+#editModal input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  padding: 10px;
+  font-size: 0.95rem;
+  border-radius: 4px;
+  border: 1px solid var(--accent);
+  background: var(--card);
+  color: var(--text);
+}
+
+#saveEditBtn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--accent);
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#saveEditBtn:hover {
+  background-color: var(--hover);
+}

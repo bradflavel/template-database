@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Template Picker</title>
+  <title>Template Database</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
   <base href="/template-database/">
@@ -88,6 +88,21 @@
         <label for="columnCount">Number of Columns to Display:</label>
         <input type="number" id="columnCount" min="1" max="10" />
       </div> -->
+    </div>
+  </div>
+
+  <!-- Edit Template Modal -->
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" id="closeEditModal">&times;</span>
+      <h2>Edit Template</h2>
+
+      <div class="template-form">
+        <textarea id="editTemplateText" placeholder="Template text..."></textarea>
+        <input type="text" id="editTemplateCategory" placeholder="Category" />
+        <input type="text" id="editTemplateTags" placeholder="Tags (comma-separated)" />
+      </div>
+      <button id="saveEditBtn">Save Changes</button>
     </div>
   </div>
 

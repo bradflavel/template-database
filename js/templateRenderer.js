@@ -3,10 +3,14 @@ import {
   setTemplates,
   deleteTemplate,
   reorderCategories,
-  reorderTemplatesInCategory
+  reorderTemplatesInCategory,
+  addTemplate
 } from './templateManager.js';
 
 let editMode = false;
+let currentEditCategory = null;
+let currentEditIndex = null;
+
 
 export function setEditMode(value) {
   editMode = value;
@@ -133,12 +137,15 @@ export function renderTemplates(searchQuery = "") {
       }
 
       div.onclick = () => {
-        if (!editMode) {
+        if (editMode) {
+          openEditModal(t, t.category, indexInCategory);
+        } else {
           navigator.clipboard.writeText(t.text);
           div.style.backgroundColor = "#DFF0D8";
           setTimeout(() => (div.style.backgroundColor = ""), 300);
         }
       };
+
 
       colDiv.appendChild(div);
     });
@@ -245,3 +252,31 @@ function setupTemplateDrag() {
   });
 }
 
+function openEditModal(template, category, index) {
+  currentEditCategory = category;
+  currentEditIndex = index;
+
+  document.getElementById("editTemplateText").value = template.text;
+  document.getElementById("editTemplateCategory").value = template.category;
+  document.getElementById("editTemplateTags").value = template.tags || "";
+
+  document.getElementById("editModal").classList.remove("hidden");
+}
+
+document.getElementById("closeEditModal").onclick = () => {
+  document.getElementById("editModal").classList.add("hidden");
+};
+
+document.getElementById("saveEditBtn").onclick = () => {
+  const text = document.getElementById("editTemplateText").value.trim();
+  const category = document.getElementById("editTemplateCategory").value.trim() || "Uncategorized";
+  const tags = document.getElementById("editTemplateTags").value.trim();
+
+  if (!text) return alert("Text cannot be empty.");
+
+  deleteTemplate(currentEditCategory, currentEditIndex);
+  addTemplate({ text, category, tags });
+
+  document.getElementById("editModal").classList.add("hidden");
+  renderTemplates(document.getElementById("searchBox").value.trim().toLowerCase());
+};
