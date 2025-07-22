@@ -33,9 +33,8 @@ export function setTemplates(newData) {
 }
 
 // Add a new template
-export function addTemplate({ text, category, tags }) {
+export function addTemplate({ text, category, tags, color }, insertAtIndex = null) {
   const cat = category || "Uncategorized";
-
   if (!templateData.templatesByCategory[cat]) {
     templateData.templatesByCategory[cat] = [];
     if (!templateData.categoryOrder.includes(cat)) {
@@ -43,7 +42,12 @@ export function addTemplate({ text, category, tags }) {
     }
   }
 
-  templateData.templatesByCategory[cat].push({ text, tags });
+  const newTemplate = { text, tags, color };
+  if (insertAtIndex !== null) {
+    templateData.templatesByCategory[cat].splice(insertAtIndex, 0, newTemplate);
+  } else {
+    templateData.templatesByCategory[cat].push(newTemplate);
+  }
   saveTemplates();
 }
 

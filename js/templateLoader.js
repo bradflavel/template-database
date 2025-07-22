@@ -105,7 +105,7 @@ function addSingleTemplate() {
   const category = document.getElementById("templateCategory").value.trim();
   const tags = document.getElementById("templateTags").value.trim();
   if (!text) return alert("Template text is required.");
-  addTemplate({ text, category, tags });
+  addTemplate({ text, category, tags, color: "" });
   clearInputs();
   renderTemplates("");
   alert("✅ Template added!");
@@ -119,7 +119,7 @@ function bulkAddTemplates() {
   lines.forEach((line) => {
     const [text, category = "", tags = ""] = line.split("||").map((v) => v.trim());
     if (text) {
-      addTemplate({ text, category, tags });
+      addTemplate({ text, category, tags, color: "" });
       added++;
     }
   });

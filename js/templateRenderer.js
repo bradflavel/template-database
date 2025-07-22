@@ -100,6 +100,33 @@ export function renderTemplates(searchQuery = "") {
     items.forEach((t, indexInCategory) => {
       const div = document.createElement("div");
       div.className = "template-box";
+      // --- Color Styling ---
+      const isDarkMode = document.body.classList.contains("dark-theme");
+      const baseColor = t.color || "";
+      div.setAttribute("data-base-color", baseColor);
+
+      // Always show a default border (fallback grey)
+      div.style.border = `3px solid ${baseColor || "#999"}`;
+
+      if (isDarkMode) {
+        // Dark mode: background stays transparent, border is colored
+        div.style.backgroundColor = "transparent";
+        if (baseColor) {
+          div.style.border = `3px solid ${baseColor}`;
+        }
+      } else {
+        // Light mode: apply color to background and border
+        if (baseColor) {
+          div.style.backgroundColor = baseColor;
+          div.style.border = "3px solid rgba(0,0,0,0.2)";
+        } else {
+          div.style.backgroundColor = "transparent";
+        }
+      }
+
+      div.style.transition = "all 0.2s ease";
+
+      div.setAttribute("data-base-color", t.color || "");
       div.title = `Category: ${t.category}\nTags: ${t.tags}`;
       div.dataset.index = indexInCategory;
       div.dataset.category = t.category;
@@ -260,7 +287,10 @@ function openEditModal(template, category, index) {
   document.getElementById("editTemplateCategory").value = template.category;
   document.getElementById("editTemplateTags").value = template.tags || "";
 
+  document.getElementById("editTemplateColor").value = template.color || "";
+  buildColorPalette(template.color || "");
   document.getElementById("editModal").classList.remove("hidden");
+
 }
 
 document.getElementById("closeEditModal").onclick = () => {
@@ -271,12 +301,53 @@ document.getElementById("saveEditBtn").onclick = () => {
   const text = document.getElementById("editTemplateText").value.trim();
   const category = document.getElementById("editTemplateCategory").value.trim() || "Uncategorized";
   const tags = document.getElementById("editTemplateTags").value.trim();
+  const color = document.getElementById("editTemplateColor").value || "";
 
   if (!text) return alert("Text cannot be empty.");
 
   deleteTemplate(currentEditCategory, currentEditIndex);
-  addTemplate({ text, category, tags });
+  addTemplate({ text, category, tags, color }, currentEditCategory === category ? currentEditIndex : null);
 
   document.getElementById("editModal").classList.add("hidden");
   renderTemplates(document.getElementById("searchBox").value.trim().toLowerCase());
 };
+
+
+const COLOR_OPTIONS = [
+  "#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF",
+  "#D5BAFF", "#FFBAED", "#BFFFFF", "#CFCFCF", "#FFAEC9"
+];
+
+function buildColorPalette(selectedColor) {
+  const palette = document.getElementById("colorPalette");
+  palette.innerHTML = "";
+
+  COLOR_OPTIONS.forEach(color => {
+    const swatch = document.createElement("span");
+    swatch.className = "color-swatch";
+    swatch.style.backgroundColor = color;
+    swatch.title = color;
+
+    if (color === selectedColor) {
+      swatch.classList.add("selected");
+    }
+
+    swatch.onclick = () => {
+      document.getElementById("editTemplateColor").value = color;
+      document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("selected"));
+      swatch.classList.add("selected");
+    };
+
+    palette.appendChild(swatch);
+  });
+
+  // ✅ Add Reset Color Button Logic Here
+  const resetBtn = document.getElementById("resetColorBtn");
+  if (resetBtn) {
+    resetBtn.onclick = () => {
+      document.getElementById("editTemplateColor").value = "";
+      document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("selected"));
+    };
+  }
+}
+

@@ -2,7 +2,7 @@
 :root {
   --bg: #F4F4F4;
   --text: #2C3E50;
-  --accent: #A3D9A5;
+  --accent: #999;
   --hover: #B6E3B6;
   --card: #ffffff;
   --text-scale: 1em; /* fallback */
@@ -12,7 +12,7 @@
 body.dark-theme {
   --bg: #121212;
   --text: #E0E0E0;
-  --accent: #6FCF97;
+  --accent: #999;
   --hover: #2E7D6F;
   --card: #1E1E1E;
 }
@@ -136,17 +136,18 @@ button:hover {
 .template-box {
   width: 100%;
   background-color: var(--card);
-  border: 1px solid var(--accent);
+  border: 3px solid #999; /* Default border always visible */
   border-radius: 6px;
   padding: 10px 14px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, border 0.2s ease;
   position: relative;
   white-space: pre-wrap;
   word-wrap: break-word;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
 }
+
 
 
 .template-box:hover {
@@ -464,4 +465,52 @@ body, html {
 
 #saveEditBtn:hover {
   background-color: var(--hover);
+}
+
+.color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.selected {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--bg);
+}
+
+.template-box:hover {
+  filter: brightness(0.9);
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.reset-color-btn {
+  margin-top: 6px;
+  padding: 6px 12px;
+  background-color: var(--text);
+  color: var(--bg);
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.reset-color-btn:hover {
+  background-color: var(--hover);
+  color: var(--text);
 }

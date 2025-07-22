@@ -31,6 +31,11 @@ export function setupSettingsModal(renderTemplates) {
     const isDark = toggleThemeCheckbox.checked;
     document.body.classList.toggle("dark-theme", isDark);
     localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    // Re-render templates to apply updated styling
+    if (typeof renderTemplates === "function") {
+      renderTemplates(document.getElementById("searchBox")?.value.trim().toLowerCase() || "");
+    }
   };
 
   // Font size buttons
